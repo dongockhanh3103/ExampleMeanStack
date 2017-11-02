@@ -21,10 +21,10 @@ module.exports=(router)=>{
                   user.save((err)=>{
                     //   console.log(err.errors);
                       if(err){
-                        res.json(err)
+                    
                           if(err.code === 11000){
-                            // res.json({success:false,message:'Username or e-mail already exists'})
-                            res.json(err)
+                             res.json({success:false,message:'Username or e-mail already exists'})
+                       
                           }
                           else{
                             if(err.errors){
@@ -36,11 +36,11 @@ module.exports=(router)=>{
                                     res.json({success:false,message:err.errors.email.message});
                                 }
                                
-                                if(err.errors.password){
-                                   // console.log(  );
-                                    res.json({success:false,message:err.errors.password.message});
-                                   //res.json(err);
-                                }
+                                // if(err.errors.password){
+                                //    // console.log(  );
+                                //     res.json({success:false,message:err.errors.password.message});
+                                //    //res.json(err);
+                                // }
                             }
                             else{
                                 res.json({success:false,message:'Could not save. Error',err});
@@ -57,6 +57,15 @@ module.exports=(router)=>{
         }
     });
     
+    router.get('/users',(req,res)=>{
+        User.find((err, users) => {
+            if (err) { return res.send(err) }
+            res.json(users);
+        });
+    
+       
+    });
 
+    
     return router;
 }
